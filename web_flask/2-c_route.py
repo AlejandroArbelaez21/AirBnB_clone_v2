@@ -15,11 +15,12 @@ def hbnb():
     strict_slashes = False
     return 'HBNB'
 
+
 @app.route('/c/<path:text>')
 def c(text):
     strict_slashes = False
     new = text.replace("_", " ")
-    return 'C %s' %new
+    return 'C %s' % new
 
 if __name__ == "__main__":
     app.run()
