@@ -5,6 +5,7 @@ from models.city import City
 import os
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import models 
 
 
 class State(BaseModel, Base):
@@ -17,13 +18,15 @@ class State(BaseModel, Base):
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         cities = relationship('City', cascade='all, delete', backref='state')
     else:
+        name = ""
+
         @property
         def cities(self):
             """ cities getter
             """
-            objects = models.storage.all()
+            objects = models.storage.all(City)
             city_list = []
-            for key, val in objects.items():
+            for val in objects.values():
                 if val.state_id == self.id:
                     city_list.append(val)
             return city_list

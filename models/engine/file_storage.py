@@ -8,6 +8,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+import models
 
 
 class FileStorage:
@@ -75,3 +76,7 @@ class FileStorage:
             if key in self.__objects:
                 del self.__objects[key]
         self.save()
+
+    def close(self):
+        """ public method close"""
+        self.reload()
