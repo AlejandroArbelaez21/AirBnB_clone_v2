@@ -34,11 +34,14 @@ class DBStorage:
         """
         current = []
         objects = {}
-        my_tables = {'cities': 'City', 'states': 'State', 'users': 'User',
-                     'amenities': 'Amenity', 'places': 'Place',
-                     'reviews': 'Review'}
+        my_tables = {'City': City, 'State': State, 'User': User,
+                     'Amenity': Amenity, 'Place': Place,
+                     'Review': Review}
         if cls:
-            current = self.__session.query(eval(cls)).all()
+            if type(cls) is str:
+                current = self.__session.query(eval(cls)).all()
+            else:
+                current = self.__session.query(cls).all()
         else:
             tables = self.__engine.table_names()
             for table in tables:
@@ -79,4 +82,4 @@ class DBStorage:
 
     def close(self):
         """ public method close """
-        self.__session.remove()
+        self.__session.close()
